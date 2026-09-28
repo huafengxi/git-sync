@@ -1,17 +1,4 @@
-# git-sync/ — periodic ff-only puller for a multi-repo workspace
-
-> **In English**: `git-sync.py` is a small stdlib-only daemon that keeps one
-> workspace checkout (a main repo plus every discovered sub-repo) up to date
-> with its `origin`, every `--interval` seconds. It is deliberately *pull-only*:
-> a dirty tracked worktree or a locally-ahead HEAD makes it SKIP that repo for
-> the round (never merge, never force, never stash), and every SKIP line carries
-> `behind=N` — how many upstream commits this round failed to bring in, so a
-> repeating SKIP tells you whether it matters. On the machine that hosts a set
-> of bare mirrors it additionally refreshes those mirrors from *their* upstream
-> in a background thread (threaded + per-mirror timeout, so a hanging remote can
-> never delay pulls). `test_git_sync.py` is a self-contained suite (temp
-> sandboxes under `/tmp`; it never writes into a real workspace).
-> The rest of this file is the author's workspace manual (Chinese).
+# git-sync/ — 工作区多仓的周期性拉取守护（ff-only）
 
 ## 是什么
 
