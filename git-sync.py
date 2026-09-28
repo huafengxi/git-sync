@@ -29,23 +29,23 @@ contain a `.git` AND are excluded by the main repo's `.gitignore` — a
 registered sub-repo must be gitignored anyway, otherwise the main repo would
 track it as a gitlink. `--repos` overrides. Clones absent on this machine are
 simply not in the face (Makefile `repo-list` is the *clone* list and may
-differ: it pulls from the dev ~/git mirrors, which do not host repos whose
-remote is a private host).
+differ: it pulls from the mirror hub's ~/git mirrors, which do not host repos
+whose remote is a private host).
 
-dev only (canonical name from env/host-id): every MIRROR_FETCH_EVERY rounds a
-background thread refreshes the dev bare mirrors from GitHub — the FETCH half
-of `make git-mirror.sync`; the push-back half is event-driven via the mirrors'
-post-receive hook (installed by `make git-mirror.hooks`), and `git-mirror.sync`
-itself remains the manual full reconciliation. Threaded + per-fetch timeout so
+Mirror host only (DISCOVERED, never named — this repo carries no machine list):
+on the machine whose mirror dir holds bare repos, every MIRROR_FETCH_EVERY rounds
+a background thread refreshes them from their own upstream — the FETCH half of the
+workspace's manual mirror reconciliation; the push-back half is event-driven via
+the mirrors' post-receive hook (installed by the workspace's Makefile). Threaded + per-fetch timeout so
 a hanging GitHub fetch can never delay pulls; if the previous round is still
 running the new one is skipped (no overlap, no queueing). Mirror fetch runs
 only in production mode (default --root, no --repos) so test sandboxes never
 touch ~/git.
 
-The mirror face needs no list: it IS the set of bare repos under ~/git on this
-machine (`mirror_repos()`), which is also what `make git-mirror.sync` and
-`make git-mirror.hooks` iterate ⇒ adding a mirror = creating the bare repo, no
-second registry to keep in step.
+The mirror face needs no list either: it IS the set of bare repos under the
+mirror dir (`mirror_repos()`), the same glob the workspace's mirror targets
+iterate ⇒ adding a mirror = creating the bare repo, no second registry to keep
+in step, and no machine name to hardcode.
 
 Single instance: flock on <workspace>/run/locks/git-sync.lock (same pattern as
 the other dsync daemons). Log goes to stdout; the Makefile redirects it to
@@ -70,8 +70,8 @@ import time
 SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
 DEFAULT_ROOT = os.path.dirname(SCRIPT_DIR)  # the ~/m workspace
 
-# dev mirror hub: fetch half of git-mirror.sync (push-back = post-receive hook)
-DEV_HOST_ID = "dev"
+# mirror hub: fetch half of the workspace's mirror reconciliation
+# (push-back = the mirrors' post-receive hook)
 MIRROR_DIR = os.path.join(os.path.expanduser("~"), "git")
 MIRROR_FETCH_EVERY = 10  # rounds (~10 min at the default interval)
 MIRROR_FETCH_TIMEOUT = 120  # per mirror; a hung GitHub must not pile up
@@ -96,8 +96,8 @@ def git(cwd, *args, timeout=300):
 
 
 def host_id(root):
-    """本机规范名：env/host-id 按 $(hostname) 查表，未命中/不可读回退 hostname
-    （口径同 svc/svc4web._local_host_id；本文件只此一处机器身份判据）。"""
+    """本机规范名：调用方工作区的 `env/host-id` 按 $(hostname) 查表，未命中/不可读
+    回退 hostname（只用于日志行；本文件只此一处机器身份判据，不写死任何机器名）。"""
     import socket
     hn = socket.gethostname()
     try:
@@ -236,6 +236,12 @@ def sync_repo(root, name):
         return "other"
 
 
+def is_mirror_host(gitdir=MIRROR_DIR):
+    """Whether THIS machine hosts the mirror face — discovered, never named:
+    it hosts mirrors iff the mirror dir holds at least one bare repo."""
+    return bool(mirror_repos(gitdir))
+
+
 def mirror_repos(gitdir=MIRROR_DIR):
     """The mirror face = every bare repo under `gitdir` (`<name>.git` that is a
     directory). No list to maintain: the same glob is what `make
@@ -247,8 +253,8 @@ def mirror_repos(gitdir=MIRROR_DIR):
 
 
 def mirror_fetch(gitdir=MIRROR_DIR):
-    """dev only: fetch half of `make git-mirror.sync` (GitHub -> mirrors).
-    Returns the number of warnings (each is one log line)."""
+    """Mirror host only: fetch half of the mirror reconciliation
+    (upstream -> mirrors). Returns the number of warnings (one log line each)."""
     warns = 0
     for repo in mirror_repos(gitdir):
         d = os.path.join(gitdir, repo + ".git")
@@ -325,14 +331,15 @@ def main():
         sys.exit(1)
     repos = args.repos.split(",") if args.repos else discover_repos(root)
     hid = host_id(root)
-    # mirror fetch is the dev production chore; skip it in test mode (explicit
-    # --root/--repos) so sandbox runs neither touch ~/git mirrors nor block on
-    # their (sometimes slow) GitHub fetches
-    do_mirror = hid == DEV_HOST_ID and root == DEFAULT_ROOT and args.repos is None
+    # mirror fetch is the mirror host's production chore; skip it in test mode
+    # (explicit --root/--repos) so sandbox runs neither touch real mirrors nor
+    # block on their (sometimes slow) upstream fetches
+    do_mirror = (is_mirror_host(args.mirror_dir) and root == DEFAULT_ROOT
+                 and args.repos is None)
 
     lock_fh = acquire_lock(root)  # noqa: F841 (held for process lifetime)
     log(f"git-sync started (root={root}, host={hid}, repos={repos}, "
-        f"interval={args.interval}s, dev={'yes' if do_mirror else 'no'})")
+        f"interval={args.interval}s, mirror={'yes' if do_mirror else 'no'})")
 
     round_no = 0
     while True:

@@ -19,8 +19,9 @@ Covers:
 + ⑨ red line: the daemon's only output face is the log — no envelope writer,
      no json import, nothing ever written under agents/.
 + ⑩ privacy: dirty file CONTENT never reaches a log line (paths/codes only).
-+ ⑪ mirror_repos: the mirror face is discovered from `<mirror-dir>/*.git`
-     (bare dirs only) — no repo list to maintain, absent dir = empty face.
++ ⑪ mirror_repos / is_mirror_host: the mirror face is discovered from
+     `<mirror-dir>/*.git` (bare dirs only) — no repo list and no machine name to
+     maintain; absent dir = empty face = not the mirror host.
 
 Self-contained: every case runs in a temp sandbox under /tmp (bare origin +
 clones). It NEVER writes into ~/m. Run with plain python3 (no pytest needed):
@@ -275,16 +276,17 @@ check("exit 0", r.returncode == 0, r.stderr[-500:])
 check("startup line lists repos", "git-sync started" in r.stdout and "repos=['.']" in r.stdout,
       r.stdout[:400])
 check("pulled", "ff updated" in r.stdout, r.stdout[-400:])
-check("no mirror fetch in test mode", "mirror" not in r.stdout, r.stdout[-400:])
+check("no mirror fetch in test mode", "[mirror" not in r.stdout, r.stdout[-400:])
+check("startup line reports the mirror face off", "mirror=no" in r.stdout, r.stdout[:400])
 check("lock file created under run/locks", os.path.exists(os.path.join(ws, "run", "locks",
                                                                      "git-sync.lock")))
 
 print("\n[⑨] red line: the log is the only output face")
 check("module exports exactly the sync face", {n for n in dir(gs) if not n.startswith("_")}
-      <= {"DEFAULT_ROOT", "DEV_HOST_ID", "DIRTY_LIST_LIMIT", "INFO_FETCH_TIMEOUT",
+      <= {"DEFAULT_ROOT", "DIRTY_LIST_LIMIT", "INFO_FETCH_TIMEOUT",
           "MIRROR_DIR", "MIRROR_FETCH_EVERY", "MIRROR_FETCH_TIMEOUT", "SCRIPT_DIR",
           "acquire_lock", "ahead_behind", "argparse", "dirty_tracked_entries",
-          "discover_repos", "fcntl", "git", "host_id", "log", "main",
+          "discover_repos", "fcntl", "git", "host_id", "is_mirror_host", "log", "main",
           "mirror_fetch", "mirror_repos", "os", "start_mirror_fetch", "subprocess", "sync_repo",
           "sys", "threading", "time"},
       str(sorted(n for n in dir(gs) if not n.startswith("_"))))
@@ -323,6 +325,9 @@ check("bare dirs only, sorted", gs.mirror_repos(mir) == ["alpha", "mirror", "zet
 check("absent mirror dir = empty face", gs.mirror_repos(os.path.join(mir, "nope")) == [],
       str(gs.mirror_repos(os.path.join(mir, "nope"))))
 check("no fetch on an empty face", gs.mirror_fetch(os.path.join(mir, "nope")) == 0)
+check("mirror host = the dir holds bare repos (discovered, not named)",
+      gs.is_mirror_host(mir) is True and gs.is_mirror_host(os.path.join(mir, "nope")) is False,
+      "%s / %s" % (gs.is_mirror_host(mir), gs.is_mirror_host(os.path.join(mir, "nope"))))
 
 print()
 print(f"{PASS} passed, {len(FAIL)} failed")
