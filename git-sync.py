@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
-"""git-sync — periodic code pull daemon for the ~/m workspace.
+"""git-sync — periodic code pull daemon for a caller-owned workspace.
 
-Every --interval seconds (default 60), for the ~/m main repo and every
+Every --interval seconds (default 60), for the workspace main repo and every
 discovered sub-repo:
 
   * dirty TRACKED entries (`git status --porcelain -uno -z` non-empty)
@@ -75,10 +75,12 @@ import sys
 import threading
 import time
 
-sys.path.insert(0, os.path.dirname(os.path.dirname(os.path.realpath(__file__))))
+# Resolve the implementation directory, including when the CLI is a symlink.
+# The helper ships in this repository; never fall back to a sibling platform.
+sys.path.insert(0, os.path.dirname(os.path.realpath(__file__)))
 from platform_paths import workspace_root
 
-SCRIPT_DIR = os.path.dirname(os.path.abspath(__file__))
+SCRIPT_DIR = os.path.dirname(os.path.realpath(__file__))
 DEFAULT_ROOT = workspace_root(__file__)
 
 # mirror hub: fetch half of the workspace's mirror reconciliation
@@ -341,7 +343,8 @@ def main():
     ap = argparse.ArgumentParser(description=__doc__)
     ap.add_argument("--interval", type=int, default=60, help="seconds between rounds (default 60)")
     ap.add_argument("--once", action="store_true", help="run a single round and exit")
-    ap.add_argument("--root", default=DEFAULT_ROOT, help="workspace root (default: ~/m)")
+    ap.add_argument("--root", default=DEFAULT_ROOT,
+                    help="workspace root (default: PLATFORM_WORKSPACE or source repo parent)")
     ap.add_argument("--repos", default=None,
                     help="comma-separated repo dirs relative to --root "
                          "(default: auto-discovered sub-repos + main repo)")

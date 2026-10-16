@@ -1,24 +1,25 @@
-"""Discover caller workspaces for canonical module paths."""
+"""Resolve the caller workspace for a standalone source checkout.
+
+Contract version 1. The implementation is local: no sibling repositories or
+consolidated-platform marker are consulted. See recovery/ADAPTATION.md.
+"""
 import os
 from pathlib import Path
 import sys
 
-MODULES = ("agentd", "pi-wrap", "agents-sync", "serviced", "heartbeatd", "git-sync")
-
 
 def workspace_root(source):
-    """Return the caller root without depending on cwd or the checkout name.
+    """Return an absolute caller root, independent of cwd and checkout name.
 
-    Legacy copies without the platform marker retain their parent-root contract.
+    A nonempty PLATFORM_WORKSPACE overrides the source-derived default and
+    expands ``~``. Relative overrides are resolved against the caller's cwd.
+    Without an override, follow source symlinks and use the source repo's
+    parent directory. CLI-specific --root precedence belongs to each caller.
     """
-    lexical = Path(os.path.abspath(source))
-    package = lexical.resolve().parent.parent
-    if not (package / ".platform-root").is_file():
-        return str(lexical.parent.parent)
     override = os.environ.get("PLATFORM_WORKSPACE")
     if override:
         return str(Path(override).expanduser().resolve())
-    return str(package.parent)
+    return str(Path(source).resolve().parent.parent)
 
 
 if __name__ == "__main__":

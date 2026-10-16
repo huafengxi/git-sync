@@ -25,18 +25,17 @@ Covers:
      `<mirror-dir>/*.git` (bare dirs only) — no repo list and no machine name to
      maintain; absent dir = empty face = not the mirror host.
 
-Self-contained: every case runs in a temp sandbox under /tmp (bare origin +
-clones). It NEVER writes into ~/m. Run with plain python3 (no pytest needed):
+Self-contained: every case uses only newly created local origins and clones
+under TMPDIR (or the system temp directory). No production fetch/sync/cleanup.
+Fixtures are retained, not recursively deleted. Run with plain Python:
     python3 test_git_sync.py
 """
 
-import atexit
 import contextlib
 import glob
 import importlib.util
 import io
 import os
-import shutil
 import subprocess
 import sys
 import tempfile
@@ -57,13 +56,6 @@ PASS = 0
 FAIL = []
 SANDBOXES = []
 PRIVACY_MARKER = "PRIVACY-MARKER-DO-NOT-EMIT-9f3k"
-
-
-@atexit.register
-def _cleanup_sandboxes():
-    """沙箱残留收：断言失败/异常退出时也把 /tmp 沙箱清干净（不留垃圾）。"""
-    for tmp in SANDBOXES:
-        shutil.rmtree(tmp, ignore_errors=True)
 
 
 def check(name, cond, detail=""):
@@ -247,13 +239,10 @@ check("HEAD untouched", head(ws) == before)
 
 print("\n[⑥] discover_repos: ignored top-level .git dirs only")
 ws, src = mk_sandbox(ignore=("sub2/",), tracked_subrepo=True)
-for d in ("sub1", "sub2", "notarepo"):
-    os.makedirs(os.path.join(ws, d), exist_ok=True)
-# sub1 = 被主仓追踪的目录（无 .gitignore 条目）里放一个 clone：不入同步面
+os.makedirs(os.path.join(ws, "notarepo"))
+# Non-ignored clone is excluded; no preexisting directory needs removal.
 for d in ("sub1", "sub2"):
-    git(ws, "clone", "-q", os.path.join(os.path.dirname(ws), "origin.git"), d + "-tmp")
-    shutil.rmtree(os.path.join(ws, d))
-    os.rename(os.path.join(ws, d + "-tmp"), os.path.join(ws, d))
+    git(ws, "clone", "-q", os.path.join(os.path.dirname(ws), "origin.git"), d)
 repos = gs.discover_repos(ws)
 check("main repo always first", repos[0] == ".", str(repos))
 check("gitignored clone discovered", "sub2" in repos, str(repos))
@@ -266,10 +255,7 @@ print("\n[⑥b] discover_repos: symlinked candidates classify per entry")
 # ob_modelrouter）。批量 check-ignore --stdin 对它 rc=128 并把其余候选的判定一并提供不到
 # ⇒ 旧实现静默降成 repos=['.']（子仓全退出同步面）。
 ws, src = mk_sandbox(ignore=("sub2/", "linked/", "plain_link"))
-os.makedirs(os.path.join(ws, "sub2"), exist_ok=True)
-git(ws, "clone", "-q", os.path.join(os.path.dirname(ws), "origin.git"), "sub2-tmp")
-shutil.rmtree(os.path.join(ws, "sub2"))
-os.rename(os.path.join(ws, "sub2-tmp"), os.path.join(ws, "sub2"))
+git(ws, "clone", "-q", os.path.join(os.path.dirname(ws), "origin.git"), "sub2")
 os.symlink(src, os.path.join(ws, "linked"))       # 目录型 pattern（linked/）匹配不到符号链接
 os.symlink(src, os.path.join(ws, "plain_link"))   # 无斜杠 pattern 匹配得到
 repos = gs.discover_repos(ws)
@@ -360,6 +346,7 @@ check("mirror host = the dir holds bare repos (discovered, not named)",
       "%s / %s" % (gs.is_mirror_host(mir), gs.is_mirror_host(os.path.join(mir, "nope"))))
 
 print()
+print("Retained fixture roots: " + ", ".join(SANDBOXES))
 print(f"{PASS} passed, {len(FAIL)} failed")
 if FAIL:
     print("FAILED: " + ", ".join(FAIL))
