@@ -1,0 +1,269 @@
+{
+  "taskId": "rd6-g-171006",
+  "PASS": true,
+  "per_source": [
+    {
+      "source": "9809211b1e91adabb0dfda570bd4a79dc4313d21",
+      "target": "16624f2e5f62213dd9cf0599a4f5d1cd6d08caee",
+      "paths": 4,
+      "disposition": "exact path projection"
+    },
+    {
+      "source": "4dd1b8eaa958ef5f236afed78a74be30e43d030b",
+      "target": "bbb6d31645164ff4668b3b84376f7c7afee5850e",
+      "paths": 2,
+      "disposition": "exact path projection"
+    },
+    {
+      "source": "b5de241e352968bd317176e221050f6950089947",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source": "c4a35640c77a9356ce61addd6a1cde918706bff3",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source": "84184041bef2e74d05164c2fc321f4b44a1717e5",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source": "00a44146804f35a5f005d574d76b772dee159cef",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source": "e582727a0d02b78d08914aed89fd7479e0159a19",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source": "ba1e707af9163b4b7ae0b554c0525d3fe5210c72",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source": "68b595f33ab50108418c9a969378e7a471c200dc",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source": "da1961bd02aca8cbf0aa72a922ef0773e757c470",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source": "f93b8eb4945bf8bf52ab0773da6623978676acd3",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source": "fb758234da0bd717d511dd41999679fa0bbf4427",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source": "4ac4631fbdbf27f3c400805b233dc1d7a9892d46",
+      "target": null,
+      "paths": 0,
+      "disposition": "no-op: c8tpr5 committed pi-wrap thinking defaults only; no git-sync/shared-helper change; no dirty worktree copied"
+    }
+  ],
+  "exact_projection_tip": "bbb6d31645164ff4668b3b84376f7c7afee5850e",
+  "adaptation_tip": "bdafd944cc0523e17edfb46cc5d2f99b9e2da94e",
+  "adaptation_delta_raw": [
+    ":100644 100644 9a5a1a22bd4d6cc7924232bad46dab1ab5a64f69 366561115c2306302ada65b659ce48cbfeb9a862 M\tREADME.md",
+    ":100755 100755 db900277e37a7ce5e2bd1b7a235b7e13426f91a1 0f2ef556d0d50632aaa6cf03deeb92e21609fde7 M\tgit-sync.py",
+    ":100644 100644 fac7d40d7846eaf80865215c413071d3a7627d1a 192acb32760c3970ff532c5ca017c666a8b7baea M\tplatform_paths.py",
+    ":000000 100644 0000000000000000000000000000000000000000 64b665ea05be1b7d06dede1d97505349e4406854 A\trecovery/ADAPTATION.md",
+    ":100644 100644 22289d5e92e4597d414337a895d2c19e189a4404 5f177fa2b0a02033b01c8bec2a67eb50d053ac6e M\ttest_git_sync.py",
+    ":100644 100644 42f1e3419ba1007398cd431ecc19d313e2bb53a5 f4b5aafaf63eb4ccb931cec84bcec69fc3759bb5 M\ttest_platform_paths.py",
+    ":000000 100644 0000000000000000000000000000000000000000 3cbd1a7ad8105c558246b964b847c98e83495922 A\ttest_recovery.py",
+    ":000000 100644 0000000000000000000000000000000000000000 30bc2936b7b65063bd7f9ac0a071847f1ab60c39 A\ttest_shell_entry.sh"
+  ],
+  "net_paths": [
+    {
+      "source_path": "git-sync/.gitignore",
+      "target_path": ".gitignore",
+      "baseline": {
+        "mode": "100644",
+        "blob": "7a60b85e148f80966a550e5ab6a762a907c69ca6"
+      },
+      "frozen_source": {
+        "mode": "100644",
+        "blob": "7a60b85e148f80966a550e5ab6a762a907c69ca6"
+      },
+      "exact_projection": {
+        "mode": "100644",
+        "blob": "7a60b85e148f80966a550e5ab6a762a907c69ca6"
+      },
+      "adapted": {
+        "mode": "100644",
+        "blob": "7a60b85e148f80966a550e5ab6a762a907c69ca6"
+      },
+      "adapted_differs": false
+    },
+    {
+      "source_path": "git-sync/README.md",
+      "target_path": "README.md",
+      "baseline": {
+        "mode": "100644",
+        "blob": "36f31a987122b2575720308980580febb8c422bd"
+      },
+      "frozen_source": {
+        "mode": "100644",
+        "blob": "9a5a1a22bd4d6cc7924232bad46dab1ab5a64f69"
+      },
+      "exact_projection": {
+        "mode": "100644",
+        "blob": "9a5a1a22bd4d6cc7924232bad46dab1ab5a64f69"
+      },
+      "adapted": {
+        "mode": "100644",
+        "blob": "366561115c2306302ada65b659ce48cbfeb9a862"
+      },
+      "adapted_differs": true
+    },
+    {
+      "source_path": "git-sync/git-sync.py",
+      "target_path": "git-sync.py",
+      "baseline": {
+        "mode": "100755",
+        "blob": "f2e4f00f05604ff0d1bbfae374846c2dac38c78e"
+      },
+      "frozen_source": {
+        "mode": "100755",
+        "blob": "db900277e37a7ce5e2bd1b7a235b7e13426f91a1"
+      },
+      "exact_projection": {
+        "mode": "100755",
+        "blob": "db900277e37a7ce5e2bd1b7a235b7e13426f91a1"
+      },
+      "adapted": {
+        "mode": "100755",
+        "blob": "0f2ef556d0d50632aaa6cf03deeb92e21609fde7"
+      },
+      "adapted_differs": true
+    },
+    {
+      "source_path": "git-sync/test_git_sync.py",
+      "target_path": "test_git_sync.py",
+      "baseline": {
+        "mode": "100644",
+        "blob": "22289d5e92e4597d414337a895d2c19e189a4404"
+      },
+      "frozen_source": {
+        "mode": "100644",
+        "blob": "22289d5e92e4597d414337a895d2c19e189a4404"
+      },
+      "exact_projection": {
+        "mode": "100644",
+        "blob": "22289d5e92e4597d414337a895d2c19e189a4404"
+      },
+      "adapted": {
+        "mode": "100644",
+        "blob": "5f177fa2b0a02033b01c8bec2a67eb50d053ac6e"
+      },
+      "adapted_differs": true
+    },
+    {
+      "source_path": "platform_paths.py",
+      "target_path": "platform_paths.py",
+      "baseline": null,
+      "frozen_source": {
+        "mode": "100644",
+        "blob": "fac7d40d7846eaf80865215c413071d3a7627d1a"
+      },
+      "exact_projection": {
+        "mode": "100644",
+        "blob": "fac7d40d7846eaf80865215c413071d3a7627d1a"
+      },
+      "adapted": {
+        "mode": "100644",
+        "blob": "192acb32760c3970ff532c5ca017c666a8b7baea"
+      },
+      "adapted_differs": true
+    },
+    {
+      "source_path": "test_platform_paths.py",
+      "target_path": "test_platform_paths.py",
+      "baseline": null,
+      "frozen_source": {
+        "mode": "100644",
+        "blob": "42f1e3419ba1007398cd431ecc19d313e2bb53a5"
+      },
+      "exact_projection": {
+        "mode": "100644",
+        "blob": "42f1e3419ba1007398cd431ecc19d313e2bb53a5"
+      },
+      "adapted": {
+        "mode": "100644",
+        "blob": "f4b5aafaf63eb4ccb931cec84bcec69fc3759bb5"
+      },
+      "adapted_differs": true
+    }
+  ],
+  "source_deleted_paths": [],
+  "unchanged_original_functions": [
+    "log",
+    "git",
+    "host_id",
+    "_ignored",
+    "discover_repos",
+    "dirty_tracked_entries",
+    "_count",
+    "ahead_behind",
+    "sync_repo",
+    "is_mirror_host",
+    "mirror_repos",
+    "mirror_fetch",
+    "start_mirror_fetch",
+    "acquire_lock",
+    "main (only --root help normalized)"
+  ],
+  "closures": [
+    {
+      "original_ref": "refs/heads/main",
+      "oid": "77e2c85fa084f8c808928d37c45b5e119844ca90",
+      "objects": 36,
+      "named_route": "refs/heads/preserve/source-remotes/origin/main",
+      "PASS": true
+    },
+    {
+      "original_ref": "refs/heads/preserve/reflog-initial-4f08270",
+      "oid": "4f08270b741e139b3f5226eff371e96f80097b9d",
+      "objects": 5,
+      "named_route": "refs/heads/preserve/reflog-initial-4f08270",
+      "PASS": true
+    },
+    {
+      "original_ref": "refs/heads/preserve/source-remotes/origin/main",
+      "oid": "77e2c85fa084f8c808928d37c45b5e119844ca90",
+      "objects": 36,
+      "named_route": "refs/heads/preserve/source-remotes/origin/main",
+      "PASS": true
+    }
+  ],
+  "original_main_ancestor": true,
+  "old_root_tree": "b8614f2fc3df7a6f896800b36dc4651249b331f6",
+  "old_root_not_main_ancestor": true,
+  "source_freshness": {
+    "working_head": "4ac4631fbdbf27f3c400805b233dc1d7a9892d46",
+    "actual_origin_main": "4ac4631fbdbf27f3c400805b233dc1d7a9892d46",
+    "working_status": "",
+    "after_freeze_working": "",
+    "after_freeze_actual_origin": ""
+  }
+}

@@ -1,0 +1,363 @@
+{
+  "source_repo": "agent-platform",
+  "baseline": "990253da3b5c5ec83fd43a2a463f39ed6d42aadf",
+  "freeze": "4ac4631fbdbf27f3c400805b233dc1d7a9892d46",
+  "order": "first-parent oldest first; per-commit no-rename path projection",
+  "baseline_module_tree": "62b0400637a1a06a47358e0bd313e85de0872313",
+  "original_main_tree": "62b0400637a1a06a47358e0bd313e85de0872313",
+  "commits": [
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "9809211b1e91adabb0dfda570bd4a79dc4313d21",
+      "first_parent": "990253da3b5c5ec83fd43a2a463f39ed6d42aadf",
+      "subject": "platform: preserve caller roots across consolidated modules",
+      "source_paths": [
+        "README.md",
+        "agentd/README.md",
+        "agentd/agentctl.py",
+        "agentd/e2e.py",
+        "agentd/loop.sh",
+        "agentd/scheduler-loop.sh",
+        "agents-sync/README.md",
+        "agents-sync/gc.py",
+        "agents-sync/loop.sh",
+        "agents-sync/replica-tag.py",
+        "agents-sync/ssh-sync.py",
+        "git-sync/README.md",
+        "git-sync/git-sync.py",
+        "heartbeatd/README.md",
+        "heartbeatd/heartbeatd.py",
+        "install.py",
+        "pi-wrap/README.md",
+        "pi-wrap/test_persona.py",
+        "pi-wrap/test_wrap.py",
+        "platform_paths.py",
+        "serviced/README.md",
+        "serviced/serviced.py",
+        "serviced/sync-loop.sh",
+        "test.py",
+        "test_platform_paths.py"
+      ],
+      "projection": [
+        {
+          "source_path": "git-sync/README.md",
+          "target_path": "README.md",
+          "before": {
+            "mode": "100644",
+            "blob": "36f31a987122b2575720308980580febb8c422bd"
+          },
+          "after": {
+            "mode": "100644",
+            "blob": "9a5a1a22bd4d6cc7924232bad46dab1ab5a64f69"
+          },
+          "deleted": false
+        },
+        {
+          "source_path": "git-sync/git-sync.py",
+          "target_path": "git-sync.py",
+          "before": {
+            "mode": "100755",
+            "blob": "f2e4f00f05604ff0d1bbfae374846c2dac38c78e"
+          },
+          "after": {
+            "mode": "100755",
+            "blob": "db900277e37a7ce5e2bd1b7a235b7e13426f91a1"
+          },
+          "deleted": false
+        },
+        {
+          "source_path": "platform_paths.py",
+          "target_path": "platform_paths.py",
+          "before": null,
+          "after": {
+            "mode": "100644",
+            "blob": "1bda46c0d34cedfbd81cb9312536ffbee36eeeb7"
+          },
+          "deleted": false
+        },
+        {
+          "source_path": "test_platform_paths.py",
+          "target_path": "test_platform_paths.py",
+          "before": null,
+          "after": {
+            "mode": "100644",
+            "blob": "6943ef066afd9b356724dc96a3919ec4a274c3bc"
+          },
+          "deleted": false
+        }
+      ],
+      "root_readme_changed": true,
+      "taskId": "rd6-g-171006",
+      "target_commit": "16624f2e5f62213dd9cf0599a4f5d1cd6d08caee",
+      "disposition": "exact path projection",
+      "root_readme_disposition": "Module role, caller-owned configuration and root-precedence contract retained in adapted README; integrated installer/portable and other module material excluded, no whole root README copy."
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "4dd1b8eaa958ef5f236afed78a74be30e43d030b",
+      "first_parent": "9809211b1e91adabb0dfda570bd4a79dc4313d21",
+      "subject": "refactor: use canonical module paths without workspace aliases",
+      "source_paths": [
+        "README.md",
+        "agentd/e2e.py",
+        "agentd/loop.sh",
+        "agentd/scheduler-loop.sh",
+        "agents-sync/loop.sh",
+        "install.py",
+        "platform_paths.py",
+        "serviced/sync-loop.sh",
+        "test_platform_paths.py"
+      ],
+      "projection": [
+        {
+          "source_path": "platform_paths.py",
+          "target_path": "platform_paths.py",
+          "before": {
+            "mode": "100644",
+            "blob": "1bda46c0d34cedfbd81cb9312536ffbee36eeeb7"
+          },
+          "after": {
+            "mode": "100644",
+            "blob": "fac7d40d7846eaf80865215c413071d3a7627d1a"
+          },
+          "deleted": false
+        },
+        {
+          "source_path": "test_platform_paths.py",
+          "target_path": "test_platform_paths.py",
+          "before": {
+            "mode": "100644",
+            "blob": "6943ef066afd9b356724dc96a3919ec4a274c3bc"
+          },
+          "after": {
+            "mode": "100644",
+            "blob": "42f1e3419ba1007398cd431ecc19d313e2bb53a5"
+          },
+          "deleted": false
+        }
+      ],
+      "root_readme_changed": true,
+      "taskId": "rd6-g-171006",
+      "target_commit": "bbb6d31645164ff4668b3b84376f7c7afee5850e",
+      "disposition": "exact path projection",
+      "root_readme_disposition": "Module role, caller-owned configuration and root-precedence contract retained in adapted README; integrated installer/portable and other module material excluded, no whole root README copy."
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "b5de241e352968bd317176e221050f6950089947",
+      "first_parent": "4dd1b8eaa958ef5f236afed78a74be30e43d030b",
+      "subject": "refactor: centralize task publication and lifecycle predicates",
+      "source_paths": [
+        "agentd/README.md",
+        "agentd/agentctl.py",
+        "agentd/e2e.py",
+        "agentd/registration.py",
+        "agentd/report.py",
+        "agentd/runner.py",
+        "agentd/scheduler-loop.sh",
+        "agentd/scheduler.py",
+        "agentd/task_state.py",
+        "agentd/test_task_contract.py",
+        "pi-wrap/pi-rpc-wrap.py"
+      ],
+      "projection": [],
+      "root_readme_changed": false,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "c4a35640c77a9356ce61addd6a1cde918706bff3",
+      "first_parent": "b5de241e352968bd317176e221050f6950089947",
+      "subject": "fix: preserve scheduler defaults on Bash 3.2",
+      "source_paths": [
+        "agentd/scheduler-loop.sh",
+        "agentd/test_task_contract.py"
+      ],
+      "projection": [],
+      "root_readme_changed": false,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "84184041bef2e74d05164c2fc321f4b44a1717e5",
+      "first_parent": "c4a35640c77a9356ce61addd6a1cde918706bff3",
+      "subject": "refactor: isolate environment loading and share deletion contracts",
+      "source_paths": [
+        "agents-sync/README.md",
+        "agents-sync/delete_contract.py",
+        "agents-sync/gc.py",
+        "agents-sync/ssh-sync.py",
+        "agents-sync/test_delete_contract.py",
+        "agents-sync/test_gc.py",
+        "serviced/README.md",
+        "serviced/serviced.py",
+        "serviced/test_env_loader.py"
+      ],
+      "projection": [],
+      "root_readme_changed": false,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "00a44146804f35a5f005d574d76b772dee159cef",
+      "first_parent": "84184041bef2e74d05164c2fc321f4b44a1717e5",
+      "subject": "refactor: share task observations and structured scheduling decisions",
+      "source_paths": [
+        "agentd/README.md",
+        "agentd/needscheck.py",
+        "agentd/report.py",
+        "agentd/scheduler.py",
+        "agentd/scheduling.py",
+        "agentd/task_labels.py",
+        "agentd/task_state.py",
+        "agentd/test_report_slots.py",
+        "agentd/test_runner_final.py",
+        "agentd/test_scheduling.py"
+      ],
+      "projection": [],
+      "root_readme_changed": false,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "e582727a0d02b78d08914aed89fd7479e0159a19",
+      "first_parent": "00a44146804f35a5f005d574d76b772dee159cef",
+      "subject": "refactor(agentd): declare resident lifecycle independently of commands",
+      "source_paths": [
+        "agentd/README.md",
+        "agentd/agent-file-protocol.md",
+        "agentd/agentctl.py",
+        "agentd/e2e.py",
+        "agentd/registration.py",
+        "agentd/runner.py",
+        "agentd/scheduler.py",
+        "agentd/task_state.py",
+        "agentd/test_runner_final.py",
+        "agentd/test_scheduling.py",
+        "agentd/test_task_contract.py",
+        "pi-wrap/README.md"
+      ],
+      "projection": [],
+      "root_readme_changed": false,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "ba1e707af9163b4b7ae0b554c0525d3fe5210c72",
+      "first_parent": "e582727a0d02b78d08914aed89fd7479e0159a19",
+      "subject": "fix(agentd): resolve web reports from explicit source context",
+      "source_paths": [
+        "agentd/README.md",
+        "agentd/agentd4web.py",
+        "agentd/tasks.md",
+        "agentd/test_web_report.py"
+      ],
+      "projection": [],
+      "root_readme_changed": false,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "68b595f33ab50108418c9a969378e7a471c200dc",
+      "first_parent": "ba1e707af9163b4b7ae0b554c0525d3fe5210c72",
+      "subject": "fix(pi-wrap): derive probe workspace from agent root [fbhjlp]",
+      "source_paths": [
+        "pi-wrap/fakepi_rpc.py",
+        "pi-wrap/pi-rpc-wrap.py",
+        "pi-wrap/test_wrap.py"
+      ],
+      "projection": [],
+      "root_readme_changed": false,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "da1961bd02aca8cbf0aa72a922ef0773e757c470",
+      "first_parent": "68b595f33ab50108418c9a969378e7a471c200dc",
+      "subject": "style(agentd): simplify task widgets to workspace-relative commands [taskId: command-center-01a13fc6]",
+      "source_paths": [
+        "agentd/tasks.md"
+      ],
+      "projection": [],
+      "root_readme_changed": false,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository"
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "f93b8eb4945bf8bf52ab0773da6623978676acd3",
+      "first_parent": "da1961bd02aca8cbf0aa72a922ef0773e757c470",
+      "subject": "feat(portable): add allowlisted offline local task installer",
+      "source_paths": [
+        "README.md",
+        "portable/README.md",
+        "portable/cli.py",
+        "portable/example.json",
+        "portable/files.json",
+        "portable/install.py",
+        "portable/test_portable.py"
+      ],
+      "projection": [],
+      "root_readme_changed": true,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository",
+      "root_readme_disposition": "Module role, caller-owned configuration and root-precedence contract retained in adapted README; integrated installer/portable and other module material excluded, no whole root README copy."
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "fb758234da0bd717d511dd41999679fa0bbf4427",
+      "first_parent": "f93b8eb4945bf8bf52ab0773da6623978676acd3",
+      "subject": "feat(portable): replace copy installer with convention-first in-place launcher",
+      "source_paths": [
+        "README.md",
+        "portable/README.md",
+        "portable/build.py",
+        "portable/cli.py",
+        "portable/example.json",
+        "portable/files.json",
+        "portable/install.py",
+        "portable/run.sh",
+        "portable/test_portable.py"
+      ],
+      "projection": [],
+      "root_readme_changed": true,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: no git-sync or shared-helper delta; other modules/portable/integration remain outside this repository",
+      "root_readme_disposition": "Module role, caller-owned configuration and root-precedence contract retained in adapted README; integrated installer/portable and other module material excluded, no whole root README copy."
+    },
+    {
+      "source_repo": "agent-platform",
+      "source_commit": "4ac4631fbdbf27f3c400805b233dc1d7a9892d46",
+      "first_parent": "fb758234da0bd717d511dd41999679fa0bbf4427",
+      "subject": "feat(pi-wrap): resolve profile thinking defaults [c8tpr5]",
+      "source_paths": [
+        "pi-wrap/persona.py",
+        "pi-wrap/test_persona.py",
+        "pi-wrap/test_thinking.py"
+      ],
+      "projection": [],
+      "root_readme_changed": false,
+      "taskId": "rd6-g-171006",
+      "target_commit": null,
+      "disposition": "no-op: c8tpr5 committed pi-wrap thinking defaults only; no git-sync/shared-helper change; no dirty worktree copied"
+    }
+  ],
+  "preservation_freeze": "fb758234da0bd717d511dd41999679fa0bbf4427"
+}

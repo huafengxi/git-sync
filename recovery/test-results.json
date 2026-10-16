@@ -1,0 +1,75 @@
+{
+  "taskId": "rd6-g-171006",
+  "time": "2026-10-16T17:35:42.203964+08:00",
+  "implementation_commit": "bdafd944cc0523e17edfb46cc5d2f99b9e2da94e",
+  "host_os": "Linux",
+  "python": "Python 3.13.5",
+  "git": "git version 2.17.0",
+  "environment": {
+    "HOME": "$ROOT/harness/home",
+    "TMPDIR": "$ROOT/harness/tmp",
+    "GIT_CONFIG_GLOBAL": "/dev/null",
+    "GIT_CONFIG_NOSYSTEM": "1",
+    "GIT_TERMINAL_PROMPT": "0",
+    "PYTHONDONTWRITEBYTECODE": "1",
+    "PLATFORM_WORKSPACE": ""
+  },
+  "tests": [
+    {
+      "command": "$CONDA_PY test_git_sync.py",
+      "exitcode": 0,
+      "passed": 49,
+      "unit": "assertions",
+      "log": "test_git_sync.py.log",
+      "sha256": "5d849ed5432a90bb350c26251be6084e7a6340daff882ba62800fad3e02ef3e0"
+    },
+    {
+      "command": "$CONDA_PY test_platform_paths.py",
+      "exitcode": 0,
+      "passed": 5,
+      "unit": "unittest cases",
+      "log": "test_platform_paths.py.log",
+      "sha256": "e9888fc588f3ef66207de1b203d5c82ccec482781a4d3c4cf47d38552d82185c"
+    },
+    {
+      "command": "$CONDA_PY test_recovery.py",
+      "exitcode": 0,
+      "passed": 6,
+      "unit": "unittest cases",
+      "log": "test_recovery.py.retry.log",
+      "sha256": "bb7e016a7d3173883db686dd8cfb27b0c1ac25cd84c0d841ca0e2c4d5c71bf81"
+    },
+    {
+      "command": "$BASH test_shell_entry.sh $CONDA_PY",
+      "bash_version": "3.2.0(2)-release",
+      "exitcode": 0,
+      "scope": "real and symlink executable and Python entry; relative helper; spaces; different cwd; overrides; no Git invocation",
+      "log": "bash32-contract.final.log",
+      "sha256": "96925aa78ad385145386bf0b50b79ef1b8df4a500715dd36e4b564eb6a184184"
+    },
+    {
+      "command": "$BASH test_shell_entry.sh $CONDA_PY",
+      "bash_version": "4.4.20(1)-release",
+      "exitcode": 0,
+      "scope": "real and symlink executable and Python entry; relative helper; spaces; different cwd; overrides; no Git invocation",
+      "log": "bash44-contract.final.log",
+      "sha256": "e5eb92a9d5196d526973ca972c9848a358e2c2238e1160fabf31f4a4895f45bc"
+    }
+  ],
+  "bash32_build": {
+    "source": "https://ftp.gnu.org/gnu/bash/bash-3.2.tar.gz",
+    "sha256": "26c99025b59e30779300b68adb764f824974d267a4d7cc1b347d14a2393f9fb4",
+    "configure": "./configure --without-bash-malloc --disable-nls",
+    "build": "make -j2",
+    "installed": false,
+    "scope": "test-only binary built inside new harness; no production installation or source edit"
+  },
+  "harness_corrections": [
+    "Initial test_recovery fixture used git init -b, unavailable on Git 2.17.0; changed fixture setup to git init plus symbolic-ref before first commit; six cases then pass. Initial failure log retained.",
+    "mac rsh first timed out, then worker disconnected; no remote write or test execution occurred. Actual Bash 3.2 tested locally on Linux using isolated build, not a claim of macOS testing."
+  ],
+  "production_fetch": false,
+  "model_calls": false,
+  "production_cleanup": false,
+  "fixture_policy": "new local repos and retained fixtures only; no recursive deletion"
+}
