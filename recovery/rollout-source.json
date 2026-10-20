@@ -1,0 +1,11 @@
+{
+  "taskId": "6ggidb",
+  "platformRevision": "5919d933289d795ef4df7616659e7943e7f6f494",
+  "module": "git-sync",
+  "base": "main",
+  "files": [
+    ".gitignore",
+    "git-sync.py",
+    "test_git_sync.py"
+  ]
+}
