@@ -348,7 +348,23 @@ def main():
     ap.add_argument("--mirror-dir", default=MIRROR_DIR,
                     help="directory holding the bare mirrors (default ~/git; "
                          "only read on the mirror host, in production mode)")
+    ap.add_argument('--manifest',help='repository registry JSON; enables Service tag synchronization')
+    ap.add_argument('--services',help='Service declarations root for --manifest')
+    ap.add_argument('--node',help='local node identity for --manifest')
     args = ap.parse_args()
+    if args.manifest:
+        from manifest import synchronize
+        if not args.services or not args.node:ap.error('--manifest requires --services and --node')
+        lock_root=os.path.join(os.path.dirname(os.path.abspath(args.manifest)),'.git')
+        lock_fh=acquire_lock(lock_root)
+        round_no=0
+        while True:
+            round_no+=1
+            ok=synchronize(args.manifest,args.services,args.node,log)
+            if args.once:return 0 if ok else 1
+            if round_no % MIRROR_FETCH_EVERY==1 and is_mirror_host(args.mirror_dir):start_mirror_fetch(args.mirror_dir)
+            time.sleep(args.interval)
+
 
     root = os.path.abspath(args.root)
     if not os.path.isdir(os.path.join(root, ".git")):
@@ -381,4 +397,4 @@ def main():
 
 
 if __name__ == "__main__":
-    main()
+    sys.exit(main())

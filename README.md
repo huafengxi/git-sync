@@ -38,3 +38,13 @@ bash test_shell_entry.sh /absolute/path/to/python3  # 可用真实 Bash 3.2 执�
 原 `test_git_sync.py` 的发现/dirty/ahead/分叉/ff-only/CLI/镜面发现回归继承自原 main；全部 fetch/pull 仅访问自建本地 bare fixture。新增恢复测试覆盖真实镜面 ff 成功/非 ff 拒绝、线程不重叠、超时、独立根/空格/不同 cwd/真实和软链入口及缺本地 helper 拒绝。测试不访问真实模型、生产镜面或服务，也不递归删除 fixture。
 
 发现面本身的补丁不能靠已降级的发现面自动送达；若源码目录已退出同步面，调用方须另行更新该目录并通过自身启动器重启。历史与源码投影、共享 helper 来源及适配见 [recovery/ADAPTATION.md](recovery/ADAPTATION.md)。
+
+## 固定 checkout 与 Service tag
+
+部署可通过 `--manifest <repos.json> --services <声明目录> --node <节点>` 使用仓库清单。清单是仓库名到 `{url,path,branch,nodes?}` 的映射；path 为目标用户的绝对路径或 ~/ 路径，nodes 可限定节点。每轮重读清单与 Service 声明的 repos 映射，汇总本节点所需 tag。同仓库的所有使用者须要求相同 tag，冲突时停止本轮 tag 切换。
+
+每仓库只使用一个固定 checkout。目录缺失时 clone；Service 引用的仓库 fetch 后检出指定 tag，未被引用的仓库跟踪清单分支。已发布 tag 不得移动或复用，fetch 不 force。配置仓自身先按分支更新，以读取新声明；rund 与 git-sync 自身同样由清单维护。源码切换不修改 Service 声明，不直接重启程序。
+
+切换前要求 tracked 工作树与 index 干净、当前提交已在 origin 分支可达；保留未跟踪文件并拒绝覆盖它们或忽略文件。异常仅报告并跳过，下一轮重试。固定路径允许旧进程读到更新后的文件，运行源码不保证为启动时快照。
+
+清单模式的锁位于清单所在配置仓的 .git/run/locks/git-sync.lock，不依赖工作区或 rund 的 Python 模块。首次部署准备配置仓、rund 与 git-sync checkout，执行一次清单同步后启动节点。
